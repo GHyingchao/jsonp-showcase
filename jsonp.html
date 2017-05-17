@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <title>jsonp</title>
+  <style type="text/css">
+	*{padding:0;margin:0;}
+	li{list-style:none;}
+	a{text-decoration:none;}
+	#box{width:300px;height:500px;margin:50px auto;border:1px solid pink;}
+	#search{display:block;width:298px;height:30px;outline:none;}
+	#list{width:300px;}
+	#list li{width:300px;height:25px;line-height:25px;text-indent:1em;font-size:14px;background:#eee;}
+	#list li a{display:block;color:#000;}
+	#list li a:hover{background:#f60;color:#fff;}
+  </style>
+ </head>
+ <body>
+	<section id='box'>
+		<input type="text" id='search'/>
+		<ul id='list'>
+			<li><a href=""></a></li>
+		</ul>
+	</section>
+
+	<script type="text/javascript">
+		//跨域请求百度的数据：动态添加的src是get请求的跨域网址；而li中接收的是请求的结果
+		var oSearch = document.getElementById('search');
+		var oList = document.getElementById('list');
+		oSearch.onkeyup = function(){
+			var val	= this.value;
+			var oScript = document.createElement('script');
+				oScript.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd='+val+'&cb=fly';
+			document.body.appendChild(oScript);
+		}
+
+		var fly = function(json){
+			var oS =  json.s;
+			oList.innerHTML = '';
+			for(var i=0;i<oS.length;i++){
+				oList.innerHTML += '<li><a href="https://www.baidu.com/s?wd='+oS[i]+'" target="_blank">'+oS[i]+'</a></li>';
+			}
+		}
+	</script>
+ </body>
+</html>
